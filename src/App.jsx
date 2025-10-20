@@ -1,14 +1,32 @@
 import { useState } from "react";
-
+import { useEffect } from "react";
+import "./App.css";
+import HeaderPurolomo from "./components/HeaderPurolomo"
 function App() {
 
-  const [registro, setRegistro] = useState([]);
+
 
   const [Descripcion, setDescripcion] = useState('');
   const [Autor, setAutor] = useState('');
   const [Version, setVersion] = useState('');
   const [Hash, setHash] = useState('');
   const [Fecha, setFecha] = useState(new Date().toISOString().slice(0,10));
+
+    const [registro, setRegistro] = useState(()=>{
+    const registrosGuardados = localStorage.getItem('historial-versiones');
+
+    if (registrosGuardados) {
+      return JSON.parse(registrosGuardados)
+    } else{
+      return []
+
+    }
+  });
+
+
+  useEffect(() => {
+    localStorage.setItem('historial-versiones', JSON.stringify(registro));
+  },[registro]);
 
 const handleSubmit = (evento) => {
     evento.preventDefault(); // Evita que la página se recargue
@@ -18,6 +36,9 @@ const handleSubmit = (evento) => {
       alert("Por favor, completa todos los campos.");
       return;
     }
+
+      //agrgeamos registros nuevos
+    setRegistro([...registro, nuevoRegistro]);
 
     // Creamos el objeto con todos los datos
     const nuevoRegistro = {
@@ -31,8 +52,7 @@ const handleSubmit = (evento) => {
 
     console.log("Nuevo registro guardado:", nuevoRegistro);
 
-    //agrgeamos registros nuevos
-    setRegistro([...registro, nuevoRegistro]);
+  
 
     // Limpiamos todos los campos
     setDescripcion('');
@@ -43,11 +63,14 @@ const handleSubmit = (evento) => {
   };
 
   return (
-    <div>
-      <h1>Reporte de Cambios De Version Purolomo, C.A</h1>
-      <form onSubmit={handleSubmit}>
 
-        <div>
+    <main className="main-content">
+    <div>
+     <HeaderPurolomo />
+      
+      <form onSubmit={handleSubmit} >
+
+        <div className="form-section">
           <label>Descripcion</label>
           <input
           type="text"
@@ -94,24 +117,14 @@ const handleSubmit = (evento) => {
         />
         </div>
 
-        <button type="submit">Guardar registro</button>
+        <button className="submit-button" type="submit">Guardar registro</button>
 
       </form>
 
-      <div className="lista-registro">
-        <h2>Registros de Cambios Realizados en las versiones</h2>
-        {registro.map((registro) => (
-           <div key={registro.id} className="registro-item">
-            <p><strong>Version:</strong> {registro.version}</p>
-            <p><strong>Descripcion:</strong> {registro.descripcion}</p>
-            <p><strong>Autor:</strong> {registro.autor}</p>
-            <p><strong>Hash:</strong> {registro.hash}</p>
-          </div>
-        ))}
-        </div>
-      
+      <HistoryList registro={registro}/>
 
     </div>
+    </main>
   );
 }
 
