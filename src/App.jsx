@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import "./App.css";
-import HeaderPurolomo from "./components/HeaderPurolomo"
+import HeaderPurolomo from "./components/HeaderPurolomo.jsx"
 function App() {
 
 
@@ -66,7 +66,7 @@ const handleSubmit = (evento) => {
 
     <main className="main-content">
     <div>
-     <HeaderPurolomo />
+     <HeaderPurolomo/>
       
       <form onSubmit={handleSubmit} >
 
