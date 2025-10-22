@@ -71,7 +71,7 @@ function App() {
         nombre={nombre}
         setNombre={setNombre}
          />
-        <HistoriList registros= {registros} />
+       <HistoriList registros={registros}/>
         </main>
       </>
     );

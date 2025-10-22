@@ -1,18 +1,71 @@
+import { Box, Text, Heading, VStack, HStack, Spacer } from '@chakra-ui/react';
+
+
 function HistoriList({ registros }) {
-    <section className="form-section">
-        <h2>Hostorial de Cambios</h2>
-        {registros.length === 0 ? (
-            <div className="empty-history">
-                <p>Hostorial vacio</p>
-            </div>
-        ) : (registros.map((registros) => (
-            <div key={registros.id} className="register-item">
-                <p><strong>Version:</strong> {registros.version}</p>
-                <p><strong>Descripcion:</strong> {registros.descripcion}</p>
-                <p><strong>Autor:</strong> {registros.autor}</p>
-                <p><strong>Hash:</strong> {registros.hash}</p>
-            </div>
-        )))}
-    </section>
+
+    return (
+        <Box
+            mt={10}
+            bg={'gray.50'}
+            p={5}
+            borderRadius='md'>
+            <Heading size='xl' mb={8}>
+                <Text color={'black'} fontWeight='bold' fontSize={22}>
+                    Historial de Versiones
+                </Text>
+            </Heading>
+            {registros.length === 0 ? (
+                <Text>No hay registros disponibles.</Text>
+            ) : (registros.map((reg) => (
+
+                <Box
+                    key={reg.id}
+                    borderBottomWidth="1px"
+                    p={4}
+                >
+                    <VStack spacing={6} align='start'>
+                    
+                        <HStack justify={'space-between'} spacing={2} pb={16}>
+                            <Text fontSize={18} fontWeight='bold'>
+                                Nombre:
+                            </Text>
+                            <Text fontSize={16} >{reg.nombre} - </Text>
+                            <Text fontSize={18} fontWeight='bold'>
+                                V{reg.version}
+                            </Text>
+                            <Text fontSize={16}> {reg.fecha}</Text>
+                        </HStack>
+
+                        <HStack spacing={2}>
+                            <Text fontSize={16} fontWeight='bold'>
+                                Autor:
+                            </Text>
+                            <Text fontSize={14}>{reg.autor}</Text>
+
+                             <Spacer justifyContent={'space-between'}/>
+
+                           <Text fontSize={16} fontWeight='bold'>
+                                Hash del commit:
+                            </Text>
+                            <Text fontSize={14}>{reg.hash}</Text>
+
+                        </HStack>
+
+                        <Spacer/>
+                        <HStack>
+                            <Text fontSize={16} fontWeight='bold'>
+                                Descripcion:
+                            </Text>
+                            <Text fontSize={14} maxWidth={'-moz-max-content'}>{reg.descripcion}</Text>
+                        </HStack>
+
+                    </VStack>
+                </Box>
+            )
+            )
+            )
+            }
+        </Box>
+    );
 }
 export default HistoriList;
