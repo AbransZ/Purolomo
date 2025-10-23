@@ -4,7 +4,7 @@ body{
   background-color: #f0f2f5;
   color: #333;
 }
-
+/*contenido del header*/
 .app-header{
   background-color: #c81d25;
   color: white;
@@ -29,7 +29,7 @@ body{
   border-radius: 5px;
   cursor: pointer;
 }
-
+/*contenido principal*/
 .main-content{
   max-width: 100%;
   margin: 20px 16px;
@@ -41,7 +41,7 @@ body{
   padding: 25px 35px;
 
 }
-
+/*fromulario para captar datos*/
 .form-section h2, list-section h2{
   border-bottom: 2px solid #eee;
   padding-bottom: 8px;
@@ -57,7 +57,18 @@ body{
 .form-grid .full-width{
   grid-column: 1/-1;
 
-}.form-group label{
+}
+.form-group input, .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: inherit;
+  /* Importante para que el padding no rompa el ancho */
+  box-sizing: border-box; 
+}
+.form-group label{
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
@@ -71,22 +82,39 @@ body{
   resize: vertical;
 }
 
+
+/*Boton de guardar*/
 .submit-button{
   width: 100%;
+  margin-top: 10px;
+   background-color: #c81d25;
+  color: white;
+  font-size: 14px;
+  border: none;
+  padding: 12px 0;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
+.full-width{
+  grid-column: 1/-1;
+}
+.submit-button button:hover{
+  background-color: #a0171e;
+opacity: 0.9;
+}
+/*Lista vacia*/
 .empty-history{
   text-align: center;
   color: #777;
   font-style: italic;
   margin-top: 40px;
 }
-
+/*Item de registros*/
 .regiter-item{
   border-bottom: 1px solid #eee;
   padding: 15px 0;
 }
-
+/*Item registrado ultimo*/
 .regiter-item:last-child{
   border-bottom: none;
 }
