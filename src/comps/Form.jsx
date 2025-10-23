@@ -30,6 +30,8 @@ function Formulario({
                 mb={6}
                 borderBottomWidth="2px"
                 borderColor="gray.200"
+                fontSize={32}
+                fontWeight="bold"
             >
                 Registrar nueva version
             </Heading>
@@ -44,6 +46,7 @@ function Formulario({
                             </Box>
                             <Input
                                 id="nombreApp"
+                                placeholder='Nombre de la app'
                                 type="text"
                                 value={nombre}
                                 onChange={(e) => setNombre(e.target.value)}
@@ -55,7 +58,7 @@ function Formulario({
 
                     <GridItem colSpan={1} padding={4}>
                         <Box>
-                            <Box p={2} fontSize="sm" fontWeight="bold" color="gray.600">
+                            <Box p={2} fontSize="20px" fontWeight="bold" color="gray.600">
                                 Autor
                             </Box>
                             <Input
@@ -64,14 +67,15 @@ function Formulario({
                                 placeholder="Nombre del autor"
                                 value={autor}
                                 onChange={(e) => setAutor(e.target.value)}
-                                size='md'
+                                fontSize={18}
+                                size='xl'
                             />
                         </Box>
                     </GridItem>
                     <GridItem colSpan={1} padding={4}>
                         {/* Campo Version (Alternativa con Box) */}
                         <Box>
-                            <Box p={2} fontSize="sm" fontWeight="bold" color="gray.600">
+                            <Box p={2} fontSize="20px" fontWeight="bold" color="gray.600">
                                 Version
                             </Box>
                             <Input
@@ -80,14 +84,15 @@ function Formulario({
                                 placeholder="ej: 1.0.0"
                                 value={version}
                                 onChange={(e) => setVersion(e.target.value)}
-                                size='md'
+                                fontSize={18}
+                                size='xl'
                             />
                         </Box>
 
                     </GridItem>
                     <GridItem colSpan={1} padding={4}>
                         <Box>
-                            <Box p={2} fontSize="sm" fontWeight="bold" color="gray.600">
+                            <Box p={2} fontSize="20px" fontWeight="bold" color="gray.600">
                                 Hash del Commit
                             </Box>
                             <Input
@@ -96,14 +101,15 @@ function Formulario({
                                 placeholder="Hash de Git"
                                 value={hash}
                                 onChange={(e) => setHash(e.target.value)}
-                                size='md'
+                                fontSize={18}
+                                size='xl'
                             />
                         </Box>
 
                     </GridItem>
                     <GridItem colSpan={1} padding={4}>
                         <Box>
-                            <Box p={2} fontSize="sm" fontWeight="bold" color="gray.600">
+                            <Box p={2} fontSize="20px" fontWeight="bold" color="gray.600">
                                 Fecha
                             </Box>
                             <Input
@@ -111,7 +117,8 @@ function Formulario({
                                 type="date"
                                 value={fecha}
                                 onChange={(e) => setFecha(e.target.value)} // Prop 'setFecha'
-                                size='md'
+                                fontSize={18}
+                                size='xl'
                             />
                         </Box>
 
@@ -127,7 +134,7 @@ function Formulario({
                                 value={descripcion}
                                 onChange={(e) => setDescripcion(e.target.value)}
                                 minHeight="100px"
-                                size='md'
+                                size='lg'
                             />
                         </Box>
                     </GridItem>
@@ -141,8 +148,10 @@ function Formulario({
                     color="white"
                     _hover={{ bg: "#a0171e" }}
                     width="full"
+                    height={16}
                     size="lg"
                     mt={4}
+                    fontSize={18}
                 >
                     + Agregar Registro
                 </Button>

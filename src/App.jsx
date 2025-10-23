@@ -1,6 +1,6 @@
 
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "./App.css";
 import HeaderPurolomo from "./comps/HeaderPurolomo";
 import HistoriList from "./comps/HistoriList"
@@ -14,14 +14,38 @@ function App() {
   const [hash, setHash] = useState('');
   const [nombre, setNombre] = useState('');
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
+  
 
-    const [registros, setRegistros] = useState(() => {
+const [registros, setRegistros] = useState(() => {
     const registrosGuardados = localStorage.getItem('historial-versiones');
-    return registrosGuardados ? JSON.parse(registrosGuardados) : [];
+    let initialRegistros = [];
+    if (registrosGuardados) {
+      try {
+        initialRegistros = JSON.parse(registrosGuardados);
+        if (!Array.isArray(initialRegistros)) initialRegistros = [];
+      } catch (e) {
+        console.error("Error al parsear localStorage", e);
+        initialRegistros = [];
+      }
+    }
+    return initialRegistros; // Devuelve la lista SIN ordenar
   });
 
   useEffect(() => {
     localStorage.setItem('historial-versiones', JSON.stringify(registros));
+  }, [registros]);
+
+  const sortedRegistros = useMemo(() => {
+    // Crea una copia y la ordena (descendente por fecha, luego versión)
+    return [...registros].sort((a, b) => {
+      const dateA = a.fecha || '';
+      const dateB = b.fecha || '';
+      const dateCompare = dateB.localeCompare(dateA);
+      if (dateCompare !== 0) return dateCompare;
+      const versionA = a.version || '';
+      const versionB = b.version || '';
+      return versionB.localeCompare(versionA);
+    });
   }, [registros]);
 
   const handleSubmit = (evento) => {
@@ -41,7 +65,11 @@ function App() {
       fecha:fecha,
     };
 
-    setRegistros([...registros, nuevoRegistro]);
+  
+
+    setRegistros(prevRegistros => [nuevoRegistro, ...prevRegistros]);
+
+   
 
     // Limpiar los campos
     setDescripcion('');
@@ -54,7 +82,7 @@ function App() {
 
     return (
       <>
-        <HeaderPurolomo />
+        <HeaderPurolomo registros= {sortedRegistros} />
         <main className="main-content">
         <Formulario
         handleSubmit= {handleSubmit}
@@ -71,7 +99,7 @@ function App() {
         nombre={nombre}
         setNombre={setNombre}
          />
-       <HistoriList registros={registros}/>
+       <HistoriList sortedRegistros={sortedRegistros}/>
         </main>
       </>
     );

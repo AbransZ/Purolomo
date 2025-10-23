@@ -1,7 +1,12 @@
 import { Box, Text, Heading, VStack, HStack, Spacer } from '@chakra-ui/react';
 
+function formatLocalDate(dateString) {
+  if (!dateString) return '';
+  const parts = dateString.split('-');
+  return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
 
-function HistoriList({ registros }) {
+function HistoriList({ sortedRegistros }) {
 
     return (
         <Box
@@ -14,9 +19,11 @@ function HistoriList({ registros }) {
                     Historial de Versiones
                 </Text>
             </Heading>
-            {registros.length === 0 ? (
+            {sortedRegistros.length === 0 ? (
                 <Text>No hay registros disponibles.</Text>
-            ) : (registros.map((reg) => (
+            ) : (sortedRegistros.map((reg) => (
+
+                
 
                 <Box
                     key={reg.id}
@@ -25,15 +32,15 @@ function HistoriList({ registros }) {
                 >
                     <VStack spacing={6} align='start'>
                     
-                        <HStack justify={'space-between'} spacing={2} pb={16}>
+                        <HStack justify={'space-between'} spacing={2} pb={8}>
                             <Text fontSize={18} fontWeight='bold'>
                                 Nombre:
                             </Text>
                             <Text fontSize={16} >{reg.nombre} - </Text>
                             <Text fontSize={18} fontWeight='bold'>
-                                V{reg.version}
+                                V{reg.version} - {formatLocalDate(reg.fecha)}
                             </Text>
-                            <Text fontSize={16}> {reg.fecha}</Text>
+                            <Text fontSize={16}> </Text>
                         </HStack>
 
                         <HStack spacing={2}>
