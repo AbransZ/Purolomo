@@ -13,12 +13,12 @@ import {
 
 function Formulario({
     handleSubmit,
+    nombre, setNombre,
     descripcion, setDescripcion,
     autor, setAutor,
     version, setVersion,
     hash, setHash,
-    fecha, setFecha, // Prop 'setFecha' (singular)
-    nombre, setNombre
+    fecha, setFecha, 
 }) {
 
     return (
@@ -53,7 +53,7 @@ function Formulario({
                        
                     </GridItem>
 
-                    <GridItem colSpan={1}>
+                    <GridItem colSpan={1} padding={4}>
                         <Box>
                             <Box p={2} fontSize="sm" fontWeight="bold" color="gray.600">
                                 Autor
@@ -68,7 +68,7 @@ function Formulario({
                             />
                         </Box>
                     </GridItem>
-                    <GridItem colSpan={1}>
+                    <GridItem colSpan={1} padding={4}>
                         {/* Campo Version (Alternativa con Box) */}
                         <Box>
                             <Box p={2} fontSize="sm" fontWeight="bold" color="gray.600">
@@ -85,7 +85,7 @@ function Formulario({
                         </Box>
 
                     </GridItem>
-                    <GridItem colSpan={1}>
+                    <GridItem colSpan={1} padding={4}>
                         <Box>
                             <Box p={2} fontSize="sm" fontWeight="bold" color="gray.600">
                                 Hash del Commit
@@ -101,7 +101,7 @@ function Formulario({
                         </Box>
 
                     </GridItem>
-                    <GridItem colSpan={1}>
+                    <GridItem colSpan={1} padding={4}>
                         <Box>
                             <Box p={2} fontSize="sm" fontWeight="bold" color="gray.600">
                                 Fecha
@@ -116,7 +116,7 @@ function Formulario({
                         </Box>
 
                     </GridItem>
-                    <GridItem colSpan={2}>
+                    <GridItem colSpan={2} padding={4}>
                         <Box>
                             <Box p={2} fontSize="20px" fontWeight="bold" color="gray.600">
                                 Descripcion
