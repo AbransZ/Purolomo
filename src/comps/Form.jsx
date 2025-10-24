@@ -1,6 +1,3 @@
-// En: src/comps/Form.jsx
-
-// 1. Importamos SOLO los componentes que SÍ funcionan y necesitamos
 import {
     Box,
     Heading,
@@ -45,7 +42,7 @@ function Formulario({
                                 Nombre de la aplicacion
                             </Box>
                             <Input
-                                id="nombreApp"
+                                id="nombre_app"
                                 placeholder='Nombre de la app'
                                 type="text"
                                 value={nombre}
@@ -96,7 +93,7 @@ function Formulario({
                                 Hash del Commit
                             </Box>
                             <Input
-                                id="hash"
+                                id="hash_git"
                                 type="text"
                                 placeholder="Hash de Git"
                                 value={hash}
@@ -130,7 +127,7 @@ function Formulario({
                             </Box>
                             <Textarea
                                 id="descripcion"
-                                fontSize={14}
+                                fontSize={18}
                                 value={descripcion}
                                 onChange={(e) => setDescripcion(e.target.value)}
                                 minHeight="100px"
@@ -146,12 +143,13 @@ function Formulario({
                     type="submit"
                     bg="#c81d25"
                     color="white"
-                    _hover={{ bg: "#a0171e" }}
+                    _hover={{ bg: "#f2424bff" }}
                     width="full"
                     height={16}
                     size="lg"
                     mt={4}
                     fontSize={18}
+                    borderRadius={10}
                 >
                     + Agregar Registro
                 </Button>

@@ -1,12 +1,16 @@
 
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "./App.css";
 import HeaderPurolomo from "./comps/HeaderPurolomo";
 import HistoriList from "./comps/HistoriList"
 import Formulario from "./comps/Form";
 
+
 function App() {
+
+  const api_url = 'http://localhost:3001/api';
 
   const [descripcion, setDescripcion] = useState('');
   const [autor, setAutor] = useState('');
@@ -16,39 +20,29 @@ function App() {
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
   
 
-const [registros, setRegistros] = useState(() => {
-    const registrosGuardados = localStorage.getItem('historial-versiones');
-    let initialRegistros = [];
-    if (registrosGuardados) {
-      try {
-        initialRegistros = JSON.parse(registrosGuardados);
-        if (!Array.isArray(initialRegistros)) initialRegistros = [];
-      } catch (e) {
-        console.error("Error al parsear localStorage", e);
-        initialRegistros = [];
-      }
-    }
-    return initialRegistros; // Devuelve la lista SIN ordenar
-  });
+const [registros, setRegistros] = useState([]);
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem('historial-versiones', JSON.stringify(registros));
-  }, [registros]);
+    const fetchRegistros = async () => {
+      try{
+        setLoading(true);
+        setError(null);
+        const response = await axios.get(`${api_url}/registros`);
+        setRegistros(response.data.data|| []);
+      }
+      catch (err) {
+        setError('Error al obtener los registros: ' + err.message);
+      }finally{
+        setLoading(false);
+      }
+    }
+    fetchRegistros();
+  },[]);
 
-  const sortedRegistros = useMemo(() => {
-    // Crea una copia y la ordena (descendente por fecha, luego versión)
-    return [...registros].sort((a, b) => {
-      const dateA = a.fecha || '';
-      const dateB = b.fecha || '';
-      const dateCompare = dateB.localeCompare(dateA);
-      if (dateCompare !== 0) return dateCompare;
-      const versionA = a.version || '';
-      const versionB = b.version || '';
-      return versionB.localeCompare(versionA);
-    });
-  }, [registros]);
 
-  const handleSubmit = (evento) => {
+  const handleSubmit = async(evento) => {
     evento.preventDefault();
     if (!descripcion || !autor || !version || !hash || !fecha || !nombre) {
       alert("Por favor, completa todos los campos.");
@@ -56,7 +50,6 @@ const [registros, setRegistros] = useState(() => {
     }
 
     const nuevoRegistro = {
-      id: Date.now(),
       descripcion:descripcion,
       autor:autor,
       version:version,
@@ -67,22 +60,29 @@ const [registros, setRegistros] = useState(() => {
 
   
 
-    setRegistros(prevRegistros => [nuevoRegistro, ...prevRegistros]);
+    try{ 
+      const response = await axios.post(`${api_url}/registros`, nuevoRegistro);
+        setRegistros(prevRegistros => [response.data,...prevRegistros])
 
-   
-
-    // Limpiar los campos
-    setDescripcion('');
+        setDescripcion('');
     setAutor('');
     setVersion('');
     setHash('');
     setNombre('');
-    setFecha(new Date().toISOString().slice(0, 10));
-  };
+    setFecha(new Date().toISOString().slice(0, 10));}     
+    
+    catch (error){
+      console.error("Error al enviar el registro:", error);
+      alert("Hubo un error al enviar el registro. Por favor, intenta nuevamente.");
+      return;
+    }
 
+  };
+if (loading) {return<p>Cargando registros</p>}
+if (error) {return<p>Error:{error}</p>}
     return (
       <>
-        <HeaderPurolomo registros= {sortedRegistros} />
+        <HeaderPurolomo registros= {registros} />
         <main className="main-content">
         <Formulario
         handleSubmit= {handleSubmit}
@@ -99,7 +99,7 @@ const [registros, setRegistros] = useState(() => {
         nombre={nombre}
         setNombre={setNombre}
          />
-       <HistoriList sortedRegistros={sortedRegistros}/>
+       <HistoriList registros={registros}/>
         </main>
       </>
     );

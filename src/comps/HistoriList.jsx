@@ -6,7 +6,7 @@ function formatLocalDate(dateString) {
   return `${parts[2]}/${parts[1]}/${parts[0]}`;
 }
 
-function HistoriList({ sortedRegistros }) {
+function HistoriList({ registros }) {
 
     return (
         <Box
@@ -15,15 +15,13 @@ function HistoriList({ sortedRegistros }) {
             p={5}
             borderRadius='md'>
             <Heading size='xl' mb={8}>
-                <Text color={'black'} fontWeight='bold' fontSize={22}>
+                <Text color={'black'} fontWeight='bold' fontSize={32}>
                     Historial de Versiones
                 </Text>
             </Heading>
-            {sortedRegistros.length === 0 ? (
+            {registros.length === 0 ? (
                 <Text>No hay registros disponibles.</Text>
-            ) : (sortedRegistros.map((reg) => (
-
-                
+            ) : (registros.map((reg) => (               
 
                 <Box
                     key={reg.id}
@@ -33,37 +31,37 @@ function HistoriList({ sortedRegistros }) {
                     <VStack spacing={6} align='start'>
                     
                         <HStack justify={'space-between'} spacing={2} pb={8}>
-                            <Text fontSize={18} fontWeight='bold'>
+                            <Text fontSize={22} fontWeight='bold'>
                                 Nombre:
                             </Text>
-                            <Text fontSize={16} >{reg.nombre} - </Text>
-                            <Text fontSize={18} fontWeight='bold'>
-                                V{reg.version} - {formatLocalDate(reg.fecha)}
+                            <Text fontSize={20} >{reg.nombre} - </Text>
+                            <Text fontSize={22} fontWeight='bold'>
+                                V{reg.version} - {reg.fecha}
                             </Text>
-                            <Text fontSize={16}> </Text>
+                            
                         </HStack>
 
                         <HStack spacing={2}>
-                            <Text fontSize={16} fontWeight='bold'>
+                            <Text fontSize={18} fontWeight='bold'>
                                 Autor:
                             </Text>
-                            <Text fontSize={14}>{reg.autor}</Text>
+                            <Text fontSize={16}>{reg.autor}</Text>
 
                              <Spacer justifyContent={'space-between'}/>
 
-                           <Text fontSize={16} fontWeight='bold'>
+                           <Text fontSize={18} fontWeight='bold'>
                                 Hash del commit:
                             </Text>
-                            <Text fontSize={14}>{reg.hash}</Text>
+                            <Text fontSize={16}>{reg.hash_git}</Text>
 
                         </HStack>
 
                         <Spacer/>
                         <HStack>
-                            <Text fontSize={16} fontWeight='bold'>
+                            <Text fontSize={18} fontWeight='bold'>
                                 Descripcion:
                             </Text>
-                            <Text fontSize={14} maxWidth={'-moz-max-content'}>{reg.descripcion}</Text>
+                            <Text fontSize={16} maxWidth={'-moz-max-content'}>{reg.descripcion}</Text>
                         </HStack>
 
                     </VStack>
