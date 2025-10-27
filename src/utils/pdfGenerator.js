@@ -63,14 +63,13 @@ export const generateHistoryPDF = (registros) => {
     doc.setFontSize(10); doc.setTextColor(50);
     const lineHeight = 6;
 
-    // NO redeclaramos currentY
     doc.text(`Aplicación: ${latestReg.nombre || 'N/A'}`, 14, currentY); currentY += lineHeight;
     doc.text(`Versión: ${latestReg.version || 'N/A'}`, 14, currentY); currentY += lineHeight;
     doc.text(`Fecha: ${latestDateFormatted}`, 14, currentY); currentY += lineHeight;
     doc.text(`Autor: ${latestReg.autor || 'N/A'}`, 14, currentY); currentY += lineHeight;
     const descLines = doc.splitTextToSize(`Descripción: ${latestReg.descripcion || 'N/A'}`, 180);
     doc.text(descLines, 14, currentY); currentY += descLines.length * lineHeight;
-    doc.text(`Hash: ${latestReg.hash || 'N/A'}`, 14, currentY);
+    doc.text(`Hash: ${latestReg.hash_git || 'N/A'}`, 14, currentY);
     currentY += lineHeight + 5; // Espacio antes de la tabla
   } else {
     // Manejo si no hay registros
@@ -96,7 +95,7 @@ export const generateHistoryPDF = (registros) => {
         reg.nombre || 'N/A',
         reg.version || 'N/A',
         reg.autor || 'N/A',
-        reg.hash || 'N/A',
+        reg.hash_git || 'N/A',
         reg.descripcion ? reg.descripcion.substring(0, 100) : 'N/A' 
     ];
     tableRows.push(rowData);

@@ -1,11 +1,14 @@
 
 
 import { useState, useEffect } from "react";
+
+import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import "./App.css";
 import HeaderPurolomo from "./comps/HeaderPurolomo";
 import HistoriList from "./comps/HistoriList"
 import Formulario from "./comps/Form";
+import EditModal from "./comps/Edit";
 
 
 function App() {
@@ -24,6 +27,35 @@ const [registros, setRegistros] = useState([]);
 const [loading, setLoading] = useState(true);
 const [error, setError] = useState(null);
 
+
+const { isOpen, onOpen, onClose } = useDisclosure();
+const [recordToEdit,setRecordToEdit]= useState(null);
+
+const handleEditClick = (registrosEdit) =>{
+  console.log('App.jsx: handleEditClick llamado con:', registrosEdit);
+  setRecordToEdit(registrosEdit)
+ onOpen();
+}
+
+const handleCloseEditModal = () => {
+    onClose();        
+    setRecordToEdit(null);     
+  };
+
+  const handleUpdate =  async (id, dataUpdated) =>{
+
+    try{
+      const response = await axios.put(`${api_url}/registros/${id}`,dataUpdated)
+      setRegistros(prev => prev.map(reg => reg.id ===id?response.data:reg))
+      handleCloseEditModal()
+      alert("Registro actualizado con exito")
+    }
+    catch(Error){
+      console.error("Error al actualizar:", error);
+      alert("Error al actualizar Datos.")
+    }
+  }
+
   useEffect(() => {
     const fetchRegistros = async () => {
       try{
@@ -40,6 +72,11 @@ const [error, setError] = useState(null);
     }
     fetchRegistros();
   },[]);
+
+  const handleRecordDisabled = (idToRemove) => {
+  setRegistros(prevRegistros => prevRegistros.filter(registro => registro.id !== idToRemove));
+};
+
 
 
   const handleSubmit = async(evento) => {
@@ -80,6 +117,8 @@ const [error, setError] = useState(null);
   };
 if (loading) {return<p>Cargando registros</p>}
 if (error) {return<p>Error:{error}</p>}
+
+console.log('App.jsx: Renderizando. isEditModalOpen =', isOpen, 'recordToEdit =', recordToEdit);
     return (
       <>
         <HeaderPurolomo registros= {registros} />
@@ -99,8 +138,15 @@ if (error) {return<p>Error:{error}</p>}
         nombre={nombre}
         setNombre={setNombre}
          />
-       <HistoriList registros={registros}/>
+       <HistoriList registros={registros} onDisable={handleRecordDisabled} onEdit={handleEditClick}/>
+       <EditModal 
+          isOpen={isOpen} 
+          onClose={onClose} 
+          record={recordToEdit}        
+          onSave={handleUpdate}         
+        />
         </main>
+        
       </>
     );
   }
