@@ -54,7 +54,7 @@ function EditModal({ isOpen, onClose, record, onSave }) {
     >
      <Dialog.Backdrop />     
       <Dialog.Positioner>
-        <Dialog.Content maxWidth={"2xl"} bgColor={"gray.100"} borderRadius={10}>
+        <Dialog.Content maxWidth={"3xl"} bgColor={"gray.100"} borderRadius={10}>
           <Dialog.Header>
             <Dialog.Title fontSize={26}>
               Editar Registro (ID: {record.id})
