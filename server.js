@@ -45,6 +45,7 @@ const db = new sql.Database(dbPath, (err) => {
                     descripcion TEXT, 
                     hash_git TEXT, 
                     fecha TEXT, 
+                    active INTEGER,
                     id_app INTEGER, 
                     FOREIGN KEY(id_app) REFERENCES aplicacion(id) 
                 )`,
@@ -142,8 +143,8 @@ app.post("/api/registros", (req, res) => {
 
   function insertRegistro(id_app) {
     const insertRegSql = `INSERT INTO registro_version 
-          (version, descripcion, hash_git, fecha, id_app) 
-          VALUES (?, ?, ?, ?, ?)`;
+          (version, descripcion, hash_git, fecha,active, id_app) 
+          VALUES (?, ?, ?, ?, 1,?)`;
     // Asegúrate que el orden coincida con los '?'
     const params = [version, descripcion, hash, fecha, id_app];
 
@@ -188,23 +189,25 @@ app.patch("/api/registros/:id/disable", (req, res) => {
       return res.status(500).json({ error: "Error interno al inhabilitar" });
     }
     if (this.changes === 0) {
-      console.log("registro con id ${id} no encontrado");
+      console.log(`registro con id ${id} no encontrado`);
       return res.status(500).json({ error: "Registro no encontrado" });
     }
-    console.log("registro con id : ${id} inhabilitado correctamente");
-    res.status(200).json({ message: "registro id:${id} Eliminado" });
+    console.log(`registro con id : ${id} inhabilitado correctamente`);
+    res.status(200).json({ message: `registro id:${id} Eliminado` });
   });
 });
 
-app.put("api/registros/:id/update", (req, res) => {
+app.put("/api/registros/:id", (req, res) => {
   const { id } = req.params;
   const { nombre, version, autor, descripcion, hash_git, fecha } = req.body;
-  console.log(`➡️ Petición PATCH recibida para actualizar registro ID: ${id}`);
+  console.log(`➡️ Petición put recibida para actualizar registro ID: ${id}`);
 
   if (!nombre || !version || !autor || !hash_git || !descripcion || !fecha) {
     return res.status(400).json({ error: "Faltan datos requeridos." });
   }
 
+
+  const getAppIdSql = "SELECT id_app FROM registro_version WHERE id = ?";
   db.get(getAppIdSql, [id], (errGet, row) => {
     if (errGet) {
       console.error("❌ Error obteniendo id_app:", errGet.message);
@@ -217,12 +220,14 @@ app.put("api/registros/:id/update", (req, res) => {
         .status(404)
         .json({ error: "Registro no encontrado para obtener id_app." });
     }
+
+
     const currentAppId = row.id_app;
     console.log(
       `ℹ️ ID de aplicación actual para registro ${id} es: ${currentAppId}`
     );
 
-    const updateApp = "update aplicacion set nombre_app =? autor=? where id =?";
+    const updateApp = "update aplicacion set nombre_app =? ,autor=? where id =?";
     db.run(updateApp, [nombre, autor, currentAppId], function (err) {
       if (err) {
         console.error("❌ Error al actualizar aplicación:", err.message);
@@ -234,19 +239,17 @@ app.put("api/registros/:id/update", (req, res) => {
         `✅ Aplicación ID ${currentAppId} actualizada (si existía). Cambios: ${this.changes}`
       );
       const sql =
-        "update resgistr_version set version = ?,descripcion = ?, hash_git = ?, fecha = ? where id = ?";
-      const params = [id, version, descripcion, hash_git, fecha];
+        "update registro_version set version = ?,descripcion = ?, hash_git = ?, fecha = ? where id = ?";
+      const params = [ version, descripcion, hash_git, fecha,id];
       db.run(sql, params, function (err) {
         if (err) {
           console.error(
-            "❌ Error al actualizar registro:",
-            errUpdateReg.message
+            "❌ Error al actualizar registro:", 
+            err.message
           );
-          return res
-            .status(500)
-            .json({
-              error: "Error interno al actualizar detalles del registro.",
-            });
+          return res.status(500).json({
+            error: "Error interno al actualizar detalles del registro.",
+          });
         }
         console.log(`✅ Registro con ID ${id} actualizado correctamente.`);
         const updatedRecord = {
@@ -259,7 +262,9 @@ app.put("api/registros/:id/update", (req, res) => {
           fecha,
           id_app: currentAppId,
         };
+        console.log(`✅ Registro nuevo ${id}, ${nombre}, ${version}, ${autor}, ${hash_git}, ${descripcion}, ${fecha}`);
         res.status(200).json(updatedRecord);
+        
       });
     });
   });
