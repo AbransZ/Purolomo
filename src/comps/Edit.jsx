@@ -156,7 +156,7 @@ function EditModal({ isOpen, onClose, record, onSave }) {
                 borderRadius={5}
                 maxHeight={"2xl"}
               >
-               Guardar Cambios
+               Guardar
               </Button>
               <Dialog.CloseTrigger asChild>
               <Button
