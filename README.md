@@ -26,3 +26,6 @@ aprendiendo a....
 hacer git rebase....
 
 desde la consola con git en colaborativo xD.
+
+
+linea nueva para interruption
