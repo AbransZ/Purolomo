@@ -21,3 +21,5 @@ If you are developing a production application, we recommend using TypeScript wi
 
 ESTO ES LA PARTE QUE SE REBASEARA DESDE EL SERVIDOR COMMIT 4
 
+trabajo de incendio simulado ha siod reparado (archivo guardado en stash)
+
