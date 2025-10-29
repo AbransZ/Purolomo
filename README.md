@@ -30,4 +30,11 @@ aprendiendo a....
 hacer git rebase....
 
 desde la consola con git en colaborativo xD.
+<<<<<<< HEAD
 >>>>>>> 7c868fa581122d6c9c96d5377e7ca3b7617983a9
+=======
+
+linea nueva para interruption
+
+hacer un revert en git 
+>>>>>>> 78b5e30065fbfe0a58df06736558708abfab93fb
