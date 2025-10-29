@@ -29,12 +29,31 @@ aprendiendo a....
 
 hacer git rebase....
 
+<<<<<<< HEAD
 desde la consola con git en colaborativo xD.
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 7c868fa581122d6c9c96d5377e7ca3b7617983a9
 =======
+=======
+
+<<<<<<< HEAD
+trabajo de incendio simulado ha siod reparado (archivo guardado en stash)
+>>>>>>> origin/master
 
 linea nueva para interruption
 
 hacer un revert en git 
+<<<<<<< HEAD
 >>>>>>> 78b5e30065fbfe0a58df06736558708abfab93fb
+=======
+=======
+
+trabajo de incendio simulado ha siod reparado (archivo guardado en stash)
+
+>>>>>>> be45cc5 (cambios de interruption)
+
+=======
+desde la consola con git en colaborativo xD.
+>>>>>>> bbba852 (Revert "cambios de interruption")
+>>>>>>> origin/master
