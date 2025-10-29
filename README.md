@@ -21,14 +21,21 @@ If you are developing a production application, we recommend using TypeScript wi
 
 ESTO ES LA PARTE QUE SE REBASEARA DESDE EL SERVIDOR COMMIT 4
 
+<<<<<<< HEAD
+=======
 trabajo de incendio simulado ha siod reparado (archivo guardado en stash)
 
+>>>>>>> origin/master
 aprendiendo a....
 
 hacer git rebase....
 
+<<<<<<< HEAD
+desde la consola con git en colaborativo xD.
+=======
 desde la consola con git en colaborativo xD.
 
 linea nueva para interruption
 
 hacer un revert en git 
+>>>>>>> origin/master
