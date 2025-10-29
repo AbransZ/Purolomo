@@ -30,4 +30,14 @@ aprendiendo a....
 hacer git rebase....
 
 desde la consola con git en colaborativo xD.
+<<<<<<< HEAD
 >>>>>>> 7c868fa581122d6c9c96d5377e7ca3b7617983a9
+=======
+
+trabajo de incendio simulado ha siod reparado (archivo guardado en stash)
+
+linea nueva para interruption
+
+hacer un revert en git 
+
+>>>>>>> bb55c418fa950815ce8005d21fb5e0baae47ba81
