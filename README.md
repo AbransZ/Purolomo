@@ -20,49 +20,8 @@ If you are developing a production application, we recommend using TypeScript wi
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
 ESTO ES LA PARTE QUE SE REBASEARA DESDE EL SERVIDOR COMMIT 4
-
-<<<<<<< HEAD
-trabajo de incendio simulado ha siod reparado (archivo guardado en stash)
-
-=======
-aprendiendo a....
-
+aprendiendo a...
 hacer git rebase....
-
-<<<<<<< HEAD
 desde la consola con git en colaborativo xD.
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 7c868fa581122d6c9c96d5377e7ca3b7617983a9
-=======
-=======
-<<<<<<< HEAD
->>>>>>> 7c868fa581122d6c9c96d5377e7ca3b7617983a9
-=======
-=======
->>>>>>> 5ffc64d17ab4422fb24823c9479fc6bf1a47ed97
-
-<<<<<<< HEAD
-trabajo de incendio simulado ha siod reparado (archivo guardado en stash)
->>>>>>> origin/master
-
-linea nueva para interruption
-
-hacer un revert en git 
-<<<<<<< HEAD
->>>>>>> 78b5e30065fbfe0a58df06736558708abfab93fb
-=======
-=======
-
-<<<<<<< HEAD
->>>>>>> bb55c418fa950815ce8005d21fb5e0baae47ba81
-=======
 trabajo de incendio simulado ha siod reparado (archivo guardado en stash)
 
->>>>>>> be45cc5 (cambios de interruption)
-
-=======
-desde la consola con git en colaborativo xD.
->>>>>>> bbba852 (Revert "cambios de interruption")
->>>>>>> origin/master
->>>>>>> 5ffc64d17ab4422fb24823c9479fc6bf1a47ed97
