@@ -130,11 +130,12 @@ function Formulario({
                             </Box>
                             <Textarea
                                 id="descripcion"
-                                fontSize={14}
+                                fontSize={18}
                                 value={descripcion}
                                 onChange={(e) => setDescripcion(e.target.value)}
                                 minHeight="100px"
-                                size='lg'
+                                size='xl'
+                                
                             />
                         </Box>
                     </GridItem>
