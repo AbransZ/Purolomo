@@ -1,0 +1,24 @@
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
+# Copiamos todo el código fuente (para que 'npm run build' funcione)
+COPY . .
+
+# Creamos la carpeta 'dist'
+RUN npm run build
+
+# --- ETAPA 2: El "Servidor" ---
+FROM nginx:alpine
+
+# Copiamos SOLO los archivos estáticos (de la carpeta 'dist' de la etapa 1)
+# al lugar donde Nginx sirve las páginas web
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Le decimos a Nginx que sirva en el puerto 80 (dentro del contenedor)
+EXPOSE 80
+
+# El comando para arrancar el servidor web
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,20 @@
+# Usamos una imagen de Node.js
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copiamos package.json para instalar *todas* las dependencias
+# (las de React y las del Server, ya que están en un solo archivo)
+COPY package*.json ./
+RUN npm install
+
+# Copiamos el server.js y la base de datos
+COPY server.js .
+COPY historial.db .
+COPY historial.sqbpro .
+
+# Expón el puerto 3001 de tu API
+EXPOSE 3001
+
+# El comando final para arrancar tu servidor
+CMD ["node", "server.js"]

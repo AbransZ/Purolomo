@@ -1,0 +1,30 @@
+services:
+  # 1. El servicio del Backend (Node.js)
+  backend:
+    # Le decimos que construya usando el Dockerfile.backend
+    build:
+      context: .
+      dockerfile: dockerFile.backend
+      imae: abransz/purolomo-backend:v1.0
+    container_name: purolomo-backend
+    # Mapeamos el puerto de la API
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./historial.db:/app/historial.db
+      - ./historial.sqbpro:/app/historial.sqbpro
+
+  # 2. El servicio del Frontend
+  frontend:
+    # Le decimos que construya usando el Dockerfile.frontend
+    build:
+      context: .
+      dockerfile: dockerfile.frontend
+      imae: abransz/purolomo-backend:v1.0
+    container_name: purolomo-frontend
+    # Mapeamos el puerto de la App
+    ports:
+      - "3000:80"
+    # Le decimos que debe esperar a que el 'backend' esté listo
+    depends_on:
+      - backend
