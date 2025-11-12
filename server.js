@@ -206,7 +206,6 @@ app.put("/api/registros/:id", (req, res) => {
     return res.status(400).json({ error: "Faltan datos requeridos." });
   }
 
-
   const getAppIdSql = "SELECT id_app FROM registro_version WHERE id = ?";
   db.get(getAppIdSql, [id], (errGet, row) => {
     if (errGet) {
@@ -221,13 +220,13 @@ app.put("/api/registros/:id", (req, res) => {
         .json({ error: "Registro no encontrado para obtener id_app." });
     }
 
-
     const currentAppId = row.id_app;
     console.log(
       `ℹ️ ID de aplicación actual para registro ${id} es: ${currentAppId}`
     );
 
-    const updateApp = "update aplicacion set nombre_app =? ,autor=? where id =?";
+    const updateApp =
+      "update aplicacion set nombre_app =? ,autor=? where id =?";
     db.run(updateApp, [nombre, autor, currentAppId], function (err) {
       if (err) {
         console.error("❌ Error al actualizar aplicación:", err.message);
@@ -240,13 +239,10 @@ app.put("/api/registros/:id", (req, res) => {
       );
       const sql =
         "update registro_version set version = ?,descripcion = ?, hash_git = ?, fecha = ? where id = ?";
-      const params = [ version, descripcion, hash_git, fecha,id];
+      const params = [version, descripcion, hash_git, fecha, id];
       db.run(sql, params, function (err) {
         if (err) {
-          console.error(
-            "❌ Error al actualizar registro:", 
-            err.message
-          );
+          console.error("❌ Error al actualizar registro:", err.message);
           return res.status(500).json({
             error: "Error interno al actualizar detalles del registro.",
           });
@@ -262,16 +258,17 @@ app.put("/api/registros/:id", (req, res) => {
           fecha,
           id_app: currentAppId,
         };
-        console.log(`✅ Registro nuevo ${id}, ${nombre}, ${version}, ${autor}, ${hash_git}, ${descripcion}, ${fecha}`);
+        console.log(
+          `✅ Registro nuevo ${id}, ${nombre}, ${version}, ${autor}, ${hash_git}, ${descripcion}, ${fecha}`
+        );
         res.status(200).json(updatedRecord);
-        
       });
     });
   });
 });
 
-app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Servidor escuchando en http://0.0.0.0:${port}`);
 });
 
 process.on("SIGINT", () => {

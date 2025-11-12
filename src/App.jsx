@@ -9,7 +9,7 @@ import Formulario from "./comps/Form";
 import EditModal from "./comps/Edit";
 
 function App() {
-  const api_url = "http://localhost:3001/api";
+  const api_url = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
   const [descripcion, setDescripcion] = useState("");
   const [autor, setAutor] = useState("");
@@ -116,7 +116,12 @@ function App() {
     return <p>Error:{error}</p>;
   }
 
-  console.log('App.jsx: Renderizando. isOpen =', isOpen, 'recordToEdit =', recordToEdit);
+  console.log(
+    "App.jsx: Renderizando. isOpen =",
+    isOpen,
+    "recordToEdit =",
+    recordToEdit
+  );
   return (
     <>
       <HeaderPurolomo registros={registros} />
