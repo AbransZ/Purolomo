@@ -23,39 +23,42 @@ function HeaderPurolomo({ registros }) {
     <Flex
       bg="red.600"
       color={"white"}
-      p={8}
+      p={{ base: 2, md: 4 }}
       justify={"space-between"}
-      align="center"
+      align={{ base: "top", md: "center" }}
     >
-      <Box p={1}>
+      <Box p={{ base: 2, md: 2 }}>
         <HStack>
           <Box
             bg={"white"}
             borderRadius={10}
-            width={"sm"}
-            height={"xxs"}
+            width={{ base: 36, md: 200 }}
             display="flex"
             justifyContent="center"
-            alignItems="center"
+            alignItems={{ base: "top", md: "center" }}
           >
             <Image
               src={logoPurolomo}
               alt="Logo-Purolomo"
-              boxSize=""
               objectFit="contain"
               borderRadius="10"
+              align={{ base: "top", md: "centers" }}
             />
           </Box>
 
           <VStack align="start">
-            <Heading fontSize="32px" color={"white"} alignContent={"center"}>
+            <Heading
+              fontSize={{ base: "15px", md: "35px" }}
+              color={"white"}
+              alignContent={"center"}
+            >
               Purolomo, C.A
             </Heading>
             <Text
-              fontSize={18}
+              fontSize={{ base: "10px", md: "18px" }}
               color={"white"}
               opacity={0.9}
-              alignContent={"center}"}
+              textAlign={"left"}
             >
               Documentacion de Cambios De Version{" "}
             </Text>
@@ -63,14 +66,15 @@ function HeaderPurolomo({ registros }) {
         </HStack>
       </Box>
 
-      <HStack spacing={4}>
+      <HStack spacing={{ base: 4, md: 6 }}>
         <Button
+          p={{ base: 2, md: 4 }}
           variant={"outline"}
           borderColor={"white"}
           bg="whiteAlpha.400"
           borderRadius="lg"
-          fontSize={15}
-          height={12}
+          fontSize={{ base: 10, md: 18 }}
+          height={{ base: 8, md: 50 }}
           onClick={handleGeneratePDF}
         >
           Generar Reporte

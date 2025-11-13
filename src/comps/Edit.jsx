@@ -8,7 +8,7 @@ import {
   Textarea,
   HStack,
   Grid,
-  GridItem
+  GridItem,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
@@ -52,122 +52,157 @@ function EditModal({ isOpen, onClose, record, onSave }) {
         }
       }}
     >
-     <Dialog.Backdrop />     
+      <Dialog.Backdrop />
       <Dialog.Positioner>
-        <Dialog.Content maxWidth={"3xl"} bgColor={"gray.100"} borderRadius={10}>
+        <Dialog.Content
+          maxWidth={{ base: 280, md: 700 }}
+          bgColor={"gray.100"}
+          borderRadius={10}
+        >
           <Dialog.Header>
-            <Dialog.Title fontSize={26}>
+            <Dialog.Title fontSize={{ base: 15, md: 30 }}>
               Editar Registro (ID: {record.id})
             </Dialog.Title>
           </Dialog.Header>
           <Dialog.Body>
-            <Flex direction="column" gap={4} p={2}>
+            <Flex direction="column" gap={4} p={{ base: 2, md: 4 }}>
               <Grid columns={2} spacing={4}>
-                <GridItem colSpan={1} p={2}>
-                  <Text mb={1} fontWeight="bold" fontSize={18} width={"md"}p={2} >
+                <GridItem colSpan={1} p={{ base: 2, md: 4 }}>
+                  <Text
+                    mb={{ base: 2, md: 4 }}
+                    fontWeight="bold"
+                    fontSize={{ base: 10, md: 18 }}
+                    width={{ base: 60, md: 250 }}
+                  >
                     Nombre de la aplicacion
                   </Text>
                   <Input
                     name="nombre"
                     value={formData.nombre}
                     onChange={handleChange}
-                    fontSize={18}
-                    size={"xl"}
+                    width={{ base: 28, md: 80 }}
+                    fontSize={{ base: 10, md: 15 }}
                     borderRadius={5}
-                  />     
-                </GridItem>    
-                <GridItem colSpan={1} p={2}>
-                  <Text mb={1} fontWeight="bold" fontSize={18} p={2}>
-                  Autor
+                  />
+                </GridItem>
+                <GridItem colSpan={1} p={{ base: 2, md: 4 }}>
+                  <Text
+                    mb={{ base: 2, md: 4 }}
+                    fontWeight="bold"
+                    fontSize={{ base: 10, md: 18 }}
+                    width={{ base: 60, md: 250 }}
+                  >
+                    Autor
                   </Text>
                   <Input
                     name="autor"
                     value={formData.autor}
                     onChange={handleChange}
-                    fontSize={18}
-                    size={"lg"}
+                    width={{ base: 28, md: 80 }}
+                    fontSize={{ base: 10, md: 15 }}
                     borderRadius={5}
                   />
                 </GridItem>
-              
-              <GridItem colSpan={1} p={2}>
-                <Box flex={1}>
-                  <Text mb={1} fontWeight="bold" fontSize={18}p={2}>
-                  Versión
-                  </Text>
-                  <Input
-                    name="version"
-                    value={formData.version}
-                    onChange={handleChange}
-                    fontSize={18}
-                    size={"lg"}
-                    borderRadius={5}
-                  />
-                </Box>
+                <GridItem colSpan={1} p={{ base: 2, md: 4 }}>
+                  <Box flex={1}>
+                    <Text
+                      mb={{ base: 2, md: 4 }}
+                      fontWeight="bold"
+                      fontSize={{ base: 10, md: 18 }}
+                      width={{ base: 60, md: 250 }}
+                    >
+                      Versión
+                    </Text>
+                    <Input
+                      name="version"
+                      value={formData.version}
+                      onChange={handleChange}
+                      width={{ base: 28, md: 80 }}
+                      fontSize={{ base: 10, md: 15 }}
+                      borderRadius={5}
+                    />
+                  </Box>
                 </GridItem>
-                <GridItem colSpan={1} p={2}>
-                  <Text mb={1} fontWeight="bold" fontSize={18}p={2}>
-                  Fecha
+                <GridItem colSpan={1} p={{ base: 2, md: 4 }}>
+                  <Text
+                    mb={{ base: 2, md: 4 }}
+                    fontWeight="bold"
+                    fontSize={{ base: 10, md: 18 }}
+                    width={{ base: 60, md: 250 }}
+                  >
+                    Fecha
                   </Text>
                   <Input
                     type="date"
                     name="fecha"
                     value={formData.fecha}
                     onChange={handleChange}
-                    fontSize={18}
+                    width={{ base: 28, md: 80 }}
+                    fontSize={{ base: 10, md: 15 }}
                     borderRadius={5}
                   />
                 </GridItem>
-              <GridItem colSpan={1} p={2}>
-                <Text mb={1} fontWeight="bold" fontSize={18}p={2}>
-                Hash Git
-                </Text>
-                <Input
-                  name="hash_git"
-                  value={formData.hash_git}
-                  onChange={handleChange}
-                  fontSize={18}
-                  borderRadius={5}
-                />
-              </GridItem>
-              <GridItem colSpan={1} p={2}>
-                <Text mb={2} fontWeight="bold" fontSize={18}p={2}>
-                Descripción
-                </Text>
-                <Textarea
-                  height={100}
-                  name="descripcion"
-                  value={formData.descripcion}
-                  onChange={handleChange}
-                  fontSize={18}
-                  borderRadius={5}
-                />
-              </GridItem>
+                <GridItem colSpan={1} p={{ base: 2, md: 4 }}>
+                  <Text
+                    mb={{ base: 2, md: 4 }}
+                    fontWeight="bold"
+                    fontSize={{ base: 10, md: 18 }}
+                    width={{ base: 60, md: 250 }}
+                  >
+                    Hash Git
+                  </Text>
+                  <Input
+                    name="hash_git"
+                    value={formData.hash_git}
+                    onChange={handleChange}
+                    width={{ base: 28, md: 80 }}
+                    fontSize={{ base: 10, md: 15 }}
+                    borderRadius={5}
+                  />
+                </GridItem>
+                <GridItem colSpan={1} p={{ base: 2, md: 4 }}>
+                  <Text
+                    mb={{ base: 2, md: 4 }}
+                    fontWeight="bold"
+                    fontSize={{ base: 10, md: 18 }}
+                    width={{ base: 60, md: 250 }}
+                  >
+                    Descripción
+                  </Text>
+                  <Textarea
+                    height={100}
+                    name="descripcion"
+                    value={formData.descripcion}
+                    onChange={handleChange}
+                    width={{ base: "220px", md: 600 }}
+                    fontSize={{ base: 10, md: 15 }}
+                    borderRadius={5}
+                  />
+                </GridItem>
               </Grid>
             </Flex>
-            
           </Dialog.Body>
           <Dialog.Footer>
             <HStack spacing={3}>
               <Button
                 bgColor="blue.200"
                 onClick={handleSaveChanges}
-                fontSize={18}
+                fontSize={{ base: 10, md: 18 }}
                 borderRadius={5}
-                maxHeight={"2xl"}
+                maxHeight={{ base: 25, md: 40 }}
               >
-               Guardar
+                Guardar
               </Button>
               <Dialog.CloseTrigger asChild>
-              <Button
-                color={"black"}
-                variant="ghost"
-                fontWeight={"bold"}
-                fontSize={20}
-              >
-              X
-              </Button>
-            </Dialog.CloseTrigger>
+                <Button
+                  color={"black"}
+                  variant="ghost"
+                  fontWeight={"bold"}
+                  fontSize={{ base: 10, md: 15 }}
+                >
+                  X
+                </Button>
+              </Dialog.CloseTrigger>
             </HStack>
           </Dialog.Footer>
         </Dialog.Content>

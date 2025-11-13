@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: dockerFile.backend
-    image: abransz/purolomo-backend:v1.3
+    image: abransz/purolomo-backend:v1.4
     container_name: purolomo-backend
     # Mapeamos el puerto de la API
     ports:
@@ -22,7 +22,7 @@ services:
       dockerfile: dockerfile.frontend
       args:
         VITE_API_URL: http://abrahan-server:3001/api
-    image: abransz/purolomo-frontend:v1.3
+    image: abransz/purolomo-frontend:v1.4
     container_name: purolomo-frontend
     # Mapeamos el puerto de la App
     ports:
