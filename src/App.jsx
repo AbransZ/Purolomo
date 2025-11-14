@@ -19,6 +19,7 @@ function App() {
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
 
   const [registros, setRegistros] = useState([]);
+  const [listaAPP, setListaAPP] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -66,7 +67,18 @@ function App() {
         setLoading(false);
       }
     };
+
+    const fetchAppList = async () => {
+      try {
+        const response = await axios.get(`${api_url}/aplicacion`);
+        setListaAPP(response.data.data || []);
+        console.log("Lista de aplicaciones obtenida:", response.data.data);
+      } catch (error) {
+        console.error("Error al obtener la lista de aplicaciones:", error);
+      }
+    };
     fetchRegistros();
+    fetchAppList();
   }, []);
 
   const handleRecordDisabled = (idToRemove) => {
@@ -140,6 +152,7 @@ function App() {
           setFecha={setFecha}
           nombre={nombre}
           setNombre={setNombre}
+          listaAPP={listaAPP}
         />
         <HistoriList
           registros={registros}

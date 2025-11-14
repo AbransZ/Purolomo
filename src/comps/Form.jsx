@@ -6,7 +6,10 @@ import {
   Button,
   Grid,
   GridItem,
+  NativeSelectRoot,
+  NativeSelectField,
 } from "@chakra-ui/react";
+import CreatableSelect from "react-select/creatable";
 
 function Formulario({
   handleSubmit,
@@ -22,7 +25,12 @@ function Formulario({
   setHash,
   fecha,
   setFecha,
+  listaAPP,
 }) {
+  const options = listaAPP.map((app) => ({
+    label: app.nombre_app,
+    value: app.nombre_app,
+  }));
   return (
     <Box as="section" mt={{ base: 2, md: 8 }}>
       <Heading
@@ -48,17 +56,29 @@ function Formulario({
             >
               Nombre de la aplicacion
             </Box>
-            <Input
-              id="nombre_app"
-              placeholder="Nombre de la app"
-              type="text"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              width={{ base: 28, md: 80 }}
-              size={{ base: 4, md: 8 }}
-              fontSize={{ base: 10, md: 18 }}
-              p={{ base: 1, md: 2 }}
-            />
+            <NativeSelectRoot>
+              <NativeSelectField
+                value={nombre}
+                placeholder="Selecciona una app"
+                fontSize={{ base: 10, md: 18 }}
+                width={{ base: 28, md: 80 }}
+                size={{ base: 4, md: 8 }}
+                onChange={(opcionSeleccionada) => {
+                  if (opcionSeleccionada) {
+                    setNombre(opcionSeleccionada.value);
+                  } else {
+                    setNombre("");
+                  }
+                }}
+              >
+                <option value="">Selecciona una app</option>
+                {listaAPP.map((app) => (
+                  <option key={app.nombre_app} value={app.nombre_app}>
+                    {app.nombre_app}
+                  </option>
+                ))}
+              </NativeSelectField>
+            </NativeSelectRoot>
           </GridItem>
 
           <GridItem colSpan={1} padding={{ base: 2, md: 4 }}>
@@ -120,6 +140,7 @@ function Formulario({
                 type="text"
                 placeholder="Hash de Git"
                 value={hash}
+                onChange={(e) => setHash(e.target.value)}
                 width={{ base: 28, md: 80 }}
                 size={{ base: 4, md: 8 }}
                 fontSize={{ base: 10, md: 18 }}

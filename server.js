@@ -67,7 +67,7 @@ const db = new sql.Database(dbPath, (err) => {
 });
 
 app.get("/api/registros", (req, res) => {
-  console.log("➡️ Petición GET a /api/registros recibida.");
+  console.log(" Petición GET a /api/registro recibida.");
   const sqlQuery = `
       SELECT 
         rv.id, rv.version, rv.descripcion, rv.hash_git, rv.fecha, 
@@ -80,8 +80,6 @@ app.get("/api/registros", (req, res) => {
       ORDER BY 
         rv.fecha DESC, rv.id DESC`;
 
-  console.log("📄 Ejecutando SQL:", sqlQuery);
-
   db.all(sqlQuery, [], (err, rows) => {
     if (err) {
       console.error("❌ Error durante la consulta:", err.message);
@@ -89,12 +87,62 @@ app.get("/api/registros", (req, res) => {
       return;
     }
 
-    console.log("🔍 Filas encontradas:", rows);
-    // console.log(`✅ ${rows.length} registros obtenidos.`);
+    console.log(
+      "🔍 Filas encontradas: OJOOOOOOOOOO SOLO DE LA API REGISTROS",
+      rows
+    );
     res.json({
       message: "success",
       data: rows,
     });
+  });
+});
+
+app.get("/api/aplicacion/:idApp/registros", (req, res) => {
+  const { idApp } = req.params;
+  console.log(
+    `➡️➡️➡️➡️ Petición GET a /api/app/${idApp}/registros recibida. EEEESSSSTTAAA ES LA QUE CORREGI`
+  );
+
+  const sqlQuery = `SELECT 
+       a.nombre_app,rv.*
+    FROM 
+      registro_version rv
+    INNER JOIN 
+      aplicacion a ON rv.id_app = a.id 
+    WHERE 
+      rv.active = 1 AND rv.id_app = ?
+    ORDER BY 
+      rv.fecha DESC, rv.id DESC`;
+
+  db.all(sqlQuery, [idApp], (error, rows) => {
+    if (error) {
+      console.error("❌ Error durante la consulta:", error.message);
+      res.status(500).json({ error: error.message });
+      return;
+    }
+    console.log(
+      `✅ ${rows.length} registros encontrados para app ID ${idApp}.`
+    );
+    res.json({ message: "ok", data: rows });
+  });
+});
+
+app.get("/api/aplicacion", (req, res) => {
+  console.log(
+    "➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️ Petición GET a /app/aplicacion recibida."
+  );
+
+  const sqlQuery = `select id , nombre_app from aplicacion order by nombre_app`;
+
+  db.all(sqlQuery, [], (error, rows) => {
+    if (error) {
+      console.error("❌ Error durante la consulta:", error.message);
+      res.status(500).json({ error: error.message });
+      return;
+    }
+    res.json({ message: "ok", data: rows });
+    console.log(`✅ ${rows.length} aplicaciones encontradas ${rows}.`);
   });
 });
 
@@ -120,7 +168,24 @@ app.post("/api/registros", (req, res) => {
       // 2.A. Si la aplicación existe, usa su ID
       appId = appRow.id;
       console.log(`ℹ️ Aplicación '${nombre}' encontrada con ID: ${appId}`);
-      insertRegistro(appId); // Llama a la función para insertar el registro
+      const sqlHash = `select id from registro_version where hash_git = ? and id_app = ?`;
+      db.get(sqlHash, [hash, appId], (errHash, hashRow) => {
+        if (errHash) {
+          console.error("❌ Error buscando hash existente:", errHash.message);
+          return res
+            .status(500)
+            .json({ error: "Error interno al buscar hash." });
+        }
+        if (hashRow) {
+          console.log(
+            `❌ Hash '${hash}' ya existe para la aplicación ID: ${appId}`
+          );
+          return res
+            .status(400)
+            .json({ error: "El hash ya existe para esta aplicación." });
+        }
+        insertRegistro(appId); // Llama a la función para insertar el registro
+      });
     } else {
       // 2.B. Si la aplicación NO existe, la creamos primero
       console.log(`ℹ️ Aplicación '${nombre}' no encontrada, creando...`);
